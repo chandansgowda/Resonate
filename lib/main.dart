@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           ),
         )
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
       initialBinding: AuthenticationBinding(),
       getPages: AppPages.pages,
     );

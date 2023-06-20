@@ -106,8 +106,8 @@ class OnboardingController extends GetxController {
           .set({"uid": _auth.currentUser!.uid});
 
       //Navigate to tabview/home screen
-      Get.offNamed(AppRoutes.tabview);
       Get.snackbar("Saved Successfully", "");
+      Get.offNamed(AppRoutes.tabview);
     } catch (e) {
       log(e.toString());
       Get.snackbar("Error!", e.toString());
