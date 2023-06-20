@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resonate/bindings/authentication_binding.dart';
@@ -8,11 +9,14 @@ import 'package:resonate/routes/app_pages.dart';
 import 'package:resonate/utils/colors.dart';
 import 'package:resonate/views/screens/login_screen.dart';
 import 'package:resonate/views/screens/onboarding_screen.dart';
+import 'package:resonate/views/screens/splash_screen.dart';
 
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.remove();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -62,7 +66,7 @@ class MyApp extends StatelessWidget {
           ),
         )
       ),
-      home: const LoginScreen(),
+      home: SplashScreen(),
       initialBinding: AuthenticationBinding(),
       getPages: AppPages.pages,
     );
