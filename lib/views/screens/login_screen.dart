@@ -8,6 +8,8 @@ import 'package:resonate/utils/app_images.dart';
 import 'package:resonate/utils/ui_sizes.dart';
 import 'package:resonate/views/widgets/auth_button.dart';
 
+import 'forgot_password_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -32,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            height: 780,
+            height: UiSizes.height_780,
             padding: EdgeInsets.symmetric(
                 horizontal: UiSizes.width_20, vertical: UiSizes.height_10),
             child: Form(
@@ -48,7 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "Welcome Back",
                     style: TextStyle(
-                        fontSize: UiSizes.size_25, color: Colors.amber),
+                        fontSize: UiSizes.size_25,
+                        color: themeController.primaryColor.value),
                   ),
                   SizedBox(height: UiSizes.height_15),
                   Padding(
@@ -61,9 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       style: TextStyle(
                           fontSize: UiSizes.size_14,
-                          color: themeController.loadTheme() == 'dark'
-                              ? Colors.white
-                              : Colors.black),
+                          color: Theme.of(context).colorScheme.onPrimary),
                       autocorrect: false,
                       decoration: InputDecoration(
                           icon: Icon(
@@ -73,9 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           errorStyle: TextStyle(fontSize: UiSizes.size_14),
                           labelText: "Email ID",
                           labelStyle: TextStyle(
-                              color: themeController.loadTheme() == 'dark'
-                                  ? Colors.white
-                                  : Colors.black)),
+                              color: Theme.of(context).colorScheme.onPrimary)),
                     ),
                   ),
                   SizedBox(height: UiSizes.height_10),
@@ -89,9 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         autocorrect: false,
                         style: TextStyle(
                             fontSize: UiSizes.size_14,
-                            color: themeController.loadTheme() == 'dark'
-                                ? Colors.white
-                                : Colors.black),
+                            color: Theme.of(context).colorScheme.onPrimary),
                         decoration: InputDecoration(
                           icon: Icon(
                             size: UiSizes.size_23,
@@ -99,9 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           labelText: "Password",
                           labelStyle: TextStyle(
-                              color: themeController.loadTheme() == 'dark'
-                                  ? Colors.white
-                                  : Colors.black),
+                              color: Theme.of(context).colorScheme.onPrimary),
                           errorStyle: TextStyle(
                             fontSize: UiSizes.size_14,
                           ),
@@ -127,12 +122,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
-                        //TODO: Navigate to forgot password screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const ForgotPasswordScreen();
+                            },
+                          ),
+                        );
                       },
                       child: Text(
                         "Forgot Password?",
                         style: TextStyle(
-                            color: Colors.amber, fontSize: UiSizes.size_14),
+                            color: themeController.primaryColor.value,
+                            fontSize: UiSizes.size_14),
                         textAlign: TextAlign.right,
                       ),
                     ),
@@ -143,6 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () async {
                         if (!controller.isLoading.value) {
                           await controller.login();
+                          controller.emailController.clear();
+                          controller.passwordController.clear();
+                          controller.confirmPasswordController.clear();
                         }
                       },
                       child: controller.isLoading.value
@@ -211,9 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         "New to Resonate?",
                         style: TextStyle(
                             fontSize: UiSizes.size_14,
-                            color: themeController.loadTheme() == 'dark'
-                                ? Colors.white
-                                : Colors.black),
+                            color: Theme.of(context).colorScheme.onPrimary),
                       ),
                       SizedBox(
                         width: UiSizes.width_5,
@@ -228,7 +232,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           "Register",
                           style: TextStyle(
-                              color: Colors.amber, fontSize: UiSizes.size_14),
+                              color: themeController.primaryColor.value,
+                              fontSize: UiSizes.size_14),
                         ),
                       )
                     ],

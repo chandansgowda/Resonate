@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -10,13 +9,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:resonate/controllers/discussions_controller.dart';
 import 'package:resonate/controllers/tabview_controller.dart';
 import 'package:resonate/services/appwrite_service.dart';
+import 'package:resonate/themes/theme_controller.dart';
 import 'package:resonate/utils/constants.dart';
 import 'package:resonate/utils/ui_sizes.dart';
-import 'package:resonate/views/screens/discussions_screen.dart';
 import 'package:resonate/views/screens/tabview_screen.dart';
 import '../routes/app_routes.dart';
 
 class AuthStateController extends GetxController {
+  final ThemeController themeController = Get.find<ThemeController>();
   Client client = AppwriteService.getClient();
   final Databases databases = AppwriteService.getDatabases();
   var isInitializing = false.obs;
@@ -39,7 +39,7 @@ class AuthStateController extends GetxController {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
 
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
@@ -237,10 +237,10 @@ class AuthStateController extends GetxController {
       title: "Are you sure?",
       middleText: "You are logging out of Resonate",
       textConfirm: "Yes",
-      buttonColor: Colors.amber,
+      buttonColor: themeController.primaryColor.value,
       confirmTextColor: Colors.white,
       textCancel: "No",
-      cancelTextColor: Colors.amber,
+      cancelTextColor: themeController.primaryColor.value,
       contentPadding: EdgeInsets.all(UiSizes.size_15),
       onConfirm: () async {
         await account.deleteSession(sessionId: 'current');
